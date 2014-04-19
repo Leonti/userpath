@@ -6,7 +6,11 @@ libraryDependencies ++= Seq(
   jdbc,
   anorm,
   cache,
-  "com.novus" %% "salat" % "1.9.5"
-)     
+  "se.radley" %% "play-plugins-salat" % "1.4.0"
+)
+
+routesImport += "se.radley.plugin.salat.Binders._"
+
+templatesImport += "org.bson.types.ObjectId"
 
 play.Project.playScalaSettings
