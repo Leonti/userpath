@@ -11,7 +11,7 @@ class DatabaseSpec extends Specification {
 
   "A user" should {
     "be findable by username" in new WithApplication {
-      User.findOneByUsername("foobar") must be equalTo null
+      User.findOneByUsername("foobar") must be equalTo None
     }
   }
 
