@@ -9,6 +9,7 @@ libraryDependencies ++= Seq(
   "se.radley" %% "play-plugins-salat" % "1.4.0"
 )
 
+// salat implicit conversions
 routesImport += "se.radley.plugin.salat.Binders._"
 
 templatesImport += "org.bson.types.ObjectId"
