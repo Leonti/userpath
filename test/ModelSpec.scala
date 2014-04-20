@@ -21,7 +21,7 @@ class ModelSpec extends Specification {
       val user = User(username = "user", password = "pass", address = Some(Address("street", "zip", "country")))
       User.insert(user)
       try User.findOneByUsername("user").get.address must be equalTo Some(Address("street", "zip", "country"))
-       finally User.remove(user)
+      finally User.remove(user)
     }
   }
 
