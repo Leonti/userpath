@@ -18,13 +18,14 @@ case class User(
                  address: Option[Address] = None,
                  added: Date = new Date(),
                  updated: Option[Date] = None,
-                 @Key("company_id")company: Option[ObjectId] = None
+                 @Key("company_id") company: Option[ObjectId] = None
                  )
 
 object User extends UserDAO with UserJson
 
 trait UserDAO extends ModelCompanion[User, ObjectId] {
   def collection = mongoCollection("users")
+
   val dao = new SalatDAO[User, ObjectId](collection) {}
 
   // Indexes
@@ -32,8 +33,8 @@ trait UserDAO extends ModelCompanion[User, ObjectId] {
 
   // Queries
   def findOneByUsername(username: String): Option[User] = dao.findOne(MongoDBObject("username" -> username))
+
   def findByCountry(country: String) = dao.find(MongoDBObject("address.country" -> country))
-  def authenticate(username: String, password: String): Option[User] = findOne(DBObject("username" -> username, "password" -> password))
 }
 
 trait UserJson {
