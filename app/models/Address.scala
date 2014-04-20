@@ -9,21 +9,26 @@ case class Address(
                     country: String
                     )
 
-object Address {
-  // Conversions
-  implicit val addressJsonWrite = new Writes[Address] {
-    def writes(a: Address): JsValue = {
-      Json.obj(
-        "street" -> a.street,
-        "zip" -> a.zip,
-        "country" -> a.country
-      )
-    }
-  }
+object Address extends AddressJson
 
-  implicit val addressJsonRead = (
-    (__ \ 'street).read[String] ~
-      (__ \ 'zip).read[String] ~
-      (__ \ 'country).read[String]
-    )(Address.apply _)
+trait AddressJson {
+
+  implicit val addressJsonWrite = Json.writes[Address]
+  implicit val addressJsonRead = Json.reads[Address]
+
+//  implicit val addressJsonWrite = new Writes[Address] {
+//    def writes(a: Address): JsValue = {
+//      Json.obj(
+//        "street" -> a.street,
+//        "zip" -> a.zip,
+//        "country" -> a.country
+//      )
+//    }
+//  }
+//
+//  implicit val addressJsonRead = (
+//    (__ \ 'street).read[String] ~
+//      (__ \ 'zip).read[String] ~
+//      (__ \ 'country).read[String]
+//    )(Address.apply _)
 }
