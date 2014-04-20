@@ -1,9 +1,8 @@
-import models.User
+import models.{User, Address}
+
 import org.specs2.mutable._
 import org.specs2.runner._
 import org.junit.runner._
-
-import com.mongodb.casbah.Imports._
 
 import play.api.test._
 
@@ -17,6 +16,13 @@ class ModelSpec extends Specification {
           User.findOneByUsername(user.username).get must be equalTo user
       }
     }
+
+    "be associated with an address" in new WithApplication {
+      val user = User(username = "user", password = "pass", address = Some(Address("street", "zip", "country")))
+      User.insert(user)
+      try User.findOneByUsername("user").get.address must be equalTo Some(Address("street", "zip", "country"))
+      // finally User.remove(user)
+    }
   }
 
   "A nil user" should {
@@ -28,7 +34,6 @@ class ModelSpec extends Specification {
 
   def withUser(test: (User) => Any) {
     val user = User(username = "user", password = "pass")
-    User.remove(MongoDBObject("username" -> user.username))
     User.insert(user)
     try test(user)
     finally User.remove(user)
