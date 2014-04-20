@@ -6,7 +6,6 @@ import com.novus.salat.annotations._
 import com.novus.salat.dao._
 import com.mongodb.casbah.Imports._
 import play.api.libs.json._
-import play.api.libs.functional.syntax._
 
 import se.radley.plugin.salat._
 import se.radley.plugin.salat.Binders._
@@ -38,29 +37,6 @@ trait UserDAO extends ModelCompanion[User, ObjectId] {
 }
 
 trait UserJson {
-
   implicit val userJsonWrite = Json.writes[User]
   implicit val userJsonRead = Json.reads[User]
-
-//  implicit val userJsonWrite = new Writes[User] {
-//    def writes(u: User): JsValue = {
-//      Json.obj(
-//        "id" -> u.id,
-//        "username" -> u.username,
-//        "address" -> u.address,
-//        "added" -> u.added,
-//        "updated" -> u.updated
-//      )
-//    }
-//  }
-//
-//  implicit val userJsonRead = (
-//    (__ \ 'id).read[ObjectId] ~
-//      (__ \ 'username).read[String] ~
-//      (__ \ 'password).read[String] ~
-//      (__ \ 'address).readNullable[Address] ~
-//      (__ \ 'added).read[Date] ~
-//      (__ \ 'updated).readNullable[Date] ~
-//      (__ \ 'company).readNullable[ObjectId]
-//    )(User.apply _)
 }
