@@ -20,22 +20,20 @@ object Users extends Controller {
     Ok(Json.toJson(user))
   }
 
-  def view(id: ObjectId) = Action {
-    User.findOneById(id).map { user =>
-      Ok(Json.toJson(user))
-    } getOrElse {
-      NotFound
-    }
+  def view(id: String) = Action {
+
+    val user = User.findOneById(new ObjectId(id))
+    Ok(Json.toJson(user))
   }
 
-  def update(id: ObjectId) = JsonAction[User] { requestUser =>
-    val user = requestUser.copy(id)
+  def update(id: String) = JsonAction[User] { requestUser =>
+    val user = requestUser.copy(new ObjectId(id))
     User.save(user, WriteConcern.Safe)
     Ok(Json.toJson(user))
   }
 
-  def delete(id: ObjectId) = Action {
-    User.removeById(id)
+  def delete(id: String) = Action {
+    User.removeById(new ObjectId(id))
     Ok("")
   }
 }
